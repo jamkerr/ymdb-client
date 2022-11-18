@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
 
 import './login-view.scss';
 
@@ -8,34 +11,24 @@ export function LoginView(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(username, password);
         /* Send a request to the server for authentication */
-        /* then call props.onLoggedIn(username) */
         props.onLoggedIn(username);
     };
 
     return (
         <>
             <h1>Sign in</h1>
-            <form>
-                <label>
-                    Username:
-                    <input
-                    type="text"
-                    value={username}
-                    onChange={e => setUsername(e.target.value)}
-                    />
-                </label>
-                <label>
-                    Password:
-                    <input
-                    type="password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    />
-                </label>
-                <button type="submit" onClick={handleSubmit}>Sign in</button>
-            </form>
+            <Form>
+                <Form.Group controlId="formUsername">
+                    <Form.Label>Username:</Form.Label>
+                    <Form.Control type="text" onChange={e => setUsername(e.target.value)} />
+                </Form.Group>
+                <Form.Group controlId="formPassword">
+                    <Form.Label>Password:</Form.Label>
+                    <Form.Control type="password" onChange={e => setPassword(e.target.value)} />
+                </Form.Group>
+                <Button variant="info" type="submit" onClick={handleSubmit}>Sign in</Button>
+            </Form>
             <p>Don't have an account yet? <a href="#">Create an account</a>.</p>
         </>
     );
