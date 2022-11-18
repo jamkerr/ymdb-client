@@ -1,5 +1,8 @@
-$color: steelblue;
+$light-color: #e7e7e7;
+$dark-color: #343a40;
 
-.my-flix {
-  color: $color;
+html body, .everything-container {
+    font-family: 'Poppins', sans-serif;
+    color: $light-color;
+    background: $dark-color;
 }
