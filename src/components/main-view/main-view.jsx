@@ -39,24 +39,23 @@ export class MainView extends React.Component {
 
         if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
-        if (movies.length === 0) return <div className='main-view' />
+        if (movies.length === 0) return <Row className='main-view' />
 
         return (
-            <Row className='justify-content-md-center main-view'>
+            <Row className='main-view g-5'>
                 {selectedMovie
                 // if a movie is selected, show MovieView for that movie, make that movieData prop available, and make the onBackClick prop available
                 ? (
-                    <Col md={8}>
+                    <Col>
                         <MovieView movieData={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
                     </Col>
                 )
                 // if the selected movie is null, show MovieCards for each movie, make movieData prop available, and make onMovieClick prop available 
-                :
-                    movies.map(movie => (
-                        <Col md={3}>
-                            <MovieCard key={movie._id} movieData={movie} onMovieClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie) }} />
-                        </Col>
-                    ))
+                : movies.map(movie => (
+                    <Col  key={movie._id} md={4}>
+                        <MovieCard movieData={movie} onMovieClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie) }} />
+                    </Col>
+                ))
             }    
             </Row>
         );
