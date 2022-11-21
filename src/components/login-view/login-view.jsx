@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -46,3 +47,7 @@ export function LoginView(props) {
         </Container>
     );
 }
+
+LoginView.propTypes = {
+    onLoggedIn: PropTypes.func.isRequired
+};
