@@ -13,7 +13,7 @@ export class MovieView extends React.Component {
                     <Card.Body className='d-flex flex-column'>
                         <Card.Title className='movie-title'>{movieData.Title}</Card.Title>
                         <Card.Text className='movie-description'>{movieData.Description}</Card.Text>
-                        <Card.Img crossOrigin="anonymous" className='movie-image mx-auto' src={movieData.ImageURL}/>
+                        <Card.Img className='movie-image mx-auto' src={movieData.ImageURL}/>
                         <Button variant='info' className='mt-2' onClick={() => { onBackClick(null); }}>Back</Button>
                     </Card.Body>
             </Card>
