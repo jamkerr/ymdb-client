@@ -13,11 +13,47 @@ export function RegistrationView(props) {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ email, setEmail ] = useState('');
+    // Declare hook for each input
+    const [ usernameErr, setUsernameErr ] = useState('');
+    const [ passwordErr, setPasswordErr ] = useState('');
+    const [ emailErr, setEmailErr ] = useState('');
+
+
+    // validate user inputs
+    const validate = () => {
+        let isReq = true;
+        if (!username) {
+            setUsernameErr('Pick a Username');
+            isReq = false;
+        } else if (username.length < 2) {
+            setUsernameErr('Username must be at least 2 characters long');
+            isReq = false;
+        }
+        if (!password) {
+            setPasswordErr('You need a password');
+            isReq = false;
+        } else if (password.length < 6) {
+            setPasswordErr('Password must be at least 6 characters long');
+            isReq = false;
+        }
+        if (!email) {
+            setEmailErr('Chuck an Email Address in here');
+            isReq = false;
+        } else if (email.indexOf('@') === -1) {
+            setEmailErr('You sure that email is correct?');
+            isReq = false;
+        }
+
+        return isReq;
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        /* Send a request to the server for authentication */
-        props.onRegistered(username);
+        const isReq = validate();
+        if (isReq) {
+            /* Send a request to the server for authentication */
+            props.onRegistered(username);
+        }
     };
 
     return (
@@ -36,6 +72,7 @@ export function RegistrationView(props) {
                                         onChange={e => setUsername(e.target.value)}
                                         required
                                     />
+                                    {usernameErr && <p>{usernameErr}</p>}
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Password:</Form.Label>
@@ -45,6 +82,7 @@ export function RegistrationView(props) {
                                         onChange={e => setPassword(e.target.value)}
                                         required
                                     />
+                                    {passwordErr && <p>{passwordErr}</p>}
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Email:</Form.Label>
@@ -54,6 +92,7 @@ export function RegistrationView(props) {
                                         onChange={e => setEmail(e.target.value)}
                                         required  
                                     />
+                                    {emailErr && <p>{emailErr}</p>}
                                 </Form.Group>
                                 <Button className='mt-2' variant="info" type="submit" onClick={handleSubmit}>Create account</Button>
                             </Form>
