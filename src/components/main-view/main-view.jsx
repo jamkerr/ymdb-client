@@ -29,10 +29,30 @@ export class MainView extends React.Component {
         });
     }
 
-    onLoggedIn(user) {
-        this.setState({
-            user
+    getMovies(token) {
+        axios.get('https://ymdeebee.herokuapp.com/movies', {
+            headers: {Authorization: `Bearer ${token}`}
+        })
+        .then(response => {
+            // Assign the result to state
+            this.setState({
+                movies: response.data
+            });
+        })
+        .catch(error => {
+            console.log(error);
         });
+    }
+
+    onLoggedIn(authData) {
+        console.log(authData);
+        this.setState({
+            user: authData.user.Username
+        });
+
+        localStorage.setItem('token', authData.token);
+        localStorage.setItem('user', authData.user.Username);
+        this.getMovies(authData.token);
     }
 
     onRegistered(registered) {
@@ -71,14 +91,12 @@ export class MainView extends React.Component {
     }
 
     componentDidMount(){
-        axios.get('https://ymdeebee.herokuapp.com/movies')
-        .then(response => {
+        let accessToken = localStorage.getItem('token');
+        if (accessToken !== null) {
             this.setState({
-                movies: response.data
+                user: localStorage.getItem('user')
             });
-        })
-        .catch(error => {
-            console.log(error);
-        });
+            this.getMovies(accessToken);
+        }
     }
 }

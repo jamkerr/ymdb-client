@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -18,7 +19,17 @@ export function LoginView(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         /* Send a request to the server for authentication */
-        props.onLoggedIn(username);
+        axios.post('https://ymdeebee.herokuapp.com/login', {
+            Username: username,
+            Password: password
+        })
+        .then(response => {
+            const data = response.data;
+            props.onLoggedIn(data);
+        })
+        .catch(e => {
+            console.log('The user or password is incorrect.')
+        });
     };
 
     return (
