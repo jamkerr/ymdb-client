@@ -11,9 +11,9 @@ export class MovieCard extends React.Component {
 
         return (
             <Card bg='secondary' className='movie-card h-100'>
+                <Card.Img crossOrigin="anonymous" src={movieData.ImageURL} />
                 <Card.Body className='d-flex flex-column'>
                     <Card.Title>{movieData.Title}</Card.Title>
-                    <Card.Text>{movieData.Description}</Card.Text>
                     <Button className='mt-auto' variant='info' onClick={() => onMovieClick(movieData)}>Open</Button>
                 </Card.Body>
             </Card>

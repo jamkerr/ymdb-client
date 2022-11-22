@@ -10,12 +10,12 @@ export class MovieView extends React.Component {
         const { movieData, onBackClick } = this.props;
         return (
             <Card className='movie-view' bg='secondary'>
-                    <Card.Body>
+                    <Card.Body className='d-flex flex-column'>
                         <Card.Title className='movie-title'>{movieData.Title}</Card.Title>
                         <Card.Text className='movie-description'>{movieData.Description}</Card.Text>
-                        <Card.Img className='movie-image' src={movieData.ImagePath}/>
-                        <Button variant='info' onClick={() => { onBackClick(null); }}>Back</Button>
-                    </Card.Body>     
+                        <Card.Img crossOrigin="anonymous" className='movie-image mx-auto' src={movieData.ImageURL}/>
+                        <Button variant='info' className='mt-2' onClick={() => { onBackClick(null); }}>Back</Button>
+                    </Card.Body>
             </Card>
         );
     }
