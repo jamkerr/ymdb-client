@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -52,7 +53,15 @@ export class MainView extends React.Component {
 
         localStorage.setItem('token', authData.token);
         localStorage.setItem('user', authData.user.Username);
-        this.getMovies(authData.token);
+        // this.getMovies(authData.token);
+    }
+
+    onLoggedOut() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.setState({
+            user: null
+        });
     }
 
     onRegistered(registered) {
@@ -72,6 +81,7 @@ export class MainView extends React.Component {
 
         return (
             <Row className='main-view g-5'>
+                <Button onClick={() => { this.onLoggedOut() }}>Sign out</Button>
                 {selectedMovie
                 // if a movie is selected, show MovieView for that movie, make that movieData prop available, and make the onBackClick prop available
                 ? (
