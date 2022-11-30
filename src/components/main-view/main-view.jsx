@@ -11,6 +11,7 @@ import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { MenuBar } from '../navbar/navbar';
 
 import './main-view.scss';
 
@@ -49,22 +50,12 @@ export class MainView extends React.Component {
     }
 
     onLoggedIn(authData) {
-        console.log(authData);
         this.setState({
             user: authData.user.Username
         });
 
         localStorage.setItem('token', authData.token);
         localStorage.setItem('user', authData.user.Username);
-        // this.getMovies(authData.token);
-    }
-
-    onLoggedOut() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        this.setState({
-            user: null
-        });
     }
 
     onRegistered(registered) {
@@ -84,9 +75,9 @@ export class MainView extends React.Component {
 
         return (
             <Router>
-                <Button onClick={() => { this.onLoggedOut() }}>Sign out</Button>
+                <MenuBar user={user}></MenuBar>
                 <Row className='main-view g-5'>
-                    {/* Show MovieCards for each movie, make movieData prop available */}
+                    {/* Card list: Show MovieCards for each movie, make movieData prop available */}
                     <Route exact path='/' render={()=> {
                         return movies.map(m => (
                             <Col key={m._id} md={4}>
@@ -94,10 +85,23 @@ export class MainView extends React.Component {
                             </Col>
                         ))
                     }} />
-                    {/* show MovieView for that movie, make that movieData prop available */}
+                    {/* Movie view: show MovieView for that movie, make that movieData prop available */}
                     <Route path='/movies/:movieId' render={({match, history}) => {
                         return <Col>
                             <MovieView movieData={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
+                        </Col>
+                    }} />
+                    {/* Director view */}
+                    <Route path='/directors/:directorName' render={({match, history}) => {
+                        if (movies.length === 0) return <div className="main-view" />;
+                        return <Col>
+                            <DirectorView movieData={movies.find(m => m.Director.Name === match.params.directorName).Director} onBackClick={() => history.goBack()} />
+                        </Col>
+                    }} />
+                    {/* Genre view */}
+                    <Route path='/genres/:genreName' render={({match, history}) => {
+                        return <Col>
+                            <GenreView movieData={movies.find(m => m.Genre.Name === match.params.genreName).Genre} onBackClick={() => history.goBack()} />
                         </Col>
                     }} />
                 </Row>
