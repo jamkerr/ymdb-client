@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -80,23 +83,25 @@ export class MainView extends React.Component {
         if (movies.length === 0) return <Row className='main-view' />
 
         return (
-            <Row className='main-view g-5'>
+            <Router>
                 <Button onClick={() => { this.onLoggedOut() }}>Sign out</Button>
-                {selectedMovie
-                // if a movie is selected, show MovieView for that movie, make that movieData prop available, and make the onBackClick prop available
-                ? (
-                    <Col>
-                        <MovieView movieData={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
-                    </Col>
-                )
-                // if the selected movie is null, show MovieCards for each movie, make movieData prop available, and make onMovieClick prop available 
-                : movies.map(movie => (
-                    <Col  key={movie._id} md={4}>
-                        <MovieCard movieData={movie} onMovieClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie) }} />
-                    </Col>
-                ))
-            }    
-            </Row>
+                <Row className='main-view g-5'>
+                    {/* Show MovieCards for each movie, make movieData prop available */}
+                    <Route exact path='/' render={()=> {
+                        return movies.map(m => (
+                            <Col key={m._id} md={4}>
+                                <MovieCard movieData={m} />
+                            </Col>
+                        ))
+                    }} />
+                    {/* show MovieView for that movie, make that movieData prop available */}
+                    <Route path='/movies/:movieId' render={({match, history}) => {
+                        return <Col>
+                            <MovieView movieData={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
+                        </Col>
+                    }} />
+                </Row>
+            </Router>
         );
     }
 
