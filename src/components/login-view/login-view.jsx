@@ -54,7 +54,7 @@ export function LoginView(props) {
                 props.onLoggedIn(data);
             })
             .catch(e => {
-                console.log('The user or password is incorrect.')
+                console.log('The user or password is incorrect.');
             });
         }
     };

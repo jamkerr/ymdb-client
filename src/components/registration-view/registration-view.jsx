@@ -52,7 +52,6 @@ export function RegistrationView(props) {
         const isReq = validate();
         if (isReq) {
             /* Send a request to the server for authentication */
-            props.onRegistered(username);
         }
     };
 
@@ -103,7 +102,3 @@ export function RegistrationView(props) {
         </Container>
     );
 }
-
-RegistrationView.propTypes = {
-    onRegistered: PropTypes.func.isRequired
-};

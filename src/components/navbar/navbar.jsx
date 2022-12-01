@@ -1,6 +1,8 @@
 import React from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 
+import './navbar.scss';
+
 export function MenuBar({user}) {
 
     const onLoggedOut = () => {
@@ -17,12 +19,12 @@ export function MenuBar({user}) {
     }
 
     return (
-        <Navbar className='container-fluid' bg='dark' sticky='top'>
+        <Navbar variant='dark' bg='dark' sticky='top'>
             <Container>
                 <Navbar.Brand className='navbar-logo' href='/'>YMDB</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle aria-controls='basic-navbar-nav' />
                 <Navbar.Collapse>
-                    <Nav>
+                    <Nav className='ms-auto'>
                         {isLoggedIn() && (
                             <Nav.Link href={`/users/${user}`}>{user}</Nav.Link>
                         )}
@@ -30,10 +32,10 @@ export function MenuBar({user}) {
                             <Button variant='link' onClick={onLoggedOut}>Sign out</Button>
                         )}
                         {!isLoggedIn() && (
-                            <Nav.Link href='/registration'>Create account</Nav.Link>
+                            <Nav.Link href='/register'>Create account</Nav.Link>
                         )}
                         {!isLoggedIn() && (
-                            <Nav.Link href='/'>Sign in</Nav.Link>
+                            <Nav.Link href='/login'>Sign in</Nav.Link>
                         )}
                     </Nav>
                 </Navbar.Collapse>
