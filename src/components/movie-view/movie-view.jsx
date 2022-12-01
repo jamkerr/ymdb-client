@@ -13,6 +13,7 @@ export class MovieView extends React.Component {
                     <Card.Title className='movie-title'>{movieData.Title}</Card.Title>
                     <Card.Text className='movie-description'>{movieData.Description}</Card.Text>
                     <Button variant="link" href={`/directors/${movieData.Director.map(d => d._id)}`}>{movieData.Director.map(d => d.Name)}</Button>
+                    <Button variant="link" href={`/genres/${movieData.Genre.map(g => g._id)}`}>{movieData.Genre.map(g => g.Name)}</Button>
                     <Card.Img className='movie-image mx-auto' src={movieData.ImageURL}/>
                     <Button variant='info' className='mt-2' onClick={() => { onBackClick(); }}>Back</Button>
                 </Card.Body>
@@ -25,8 +26,9 @@ MovieView.propTypes = {
     movieData: PropTypes.shape({
         Title: PropTypes.string.isRequired,
         Description: PropTypes.string.isRequired,
-        ImageURL: PropTypes.string,
-        Director: PropTypes.array
+        ImageURL: PropTypes.string.isRequired,
+        Director: PropTypes.array.isRequired,
+        Genre: PropTypes.array.isRequired
     }).isRequired,
     onBackClick: PropTypes.func.isRequired
 };

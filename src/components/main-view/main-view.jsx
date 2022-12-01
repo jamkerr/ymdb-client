@@ -12,6 +12,7 @@ import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { MenuBar } from '../navbar/navbar';
 import { DirectorView } from '../director-view/director-view';
+import { GenreView } from '../genre-view/genre-view';
 
 
 import './main-view.scss';
@@ -98,7 +99,7 @@ export class MainView extends React.Component {
                     {/* Director view */}
                     <Route path='/directors/:directorId' render={({match, history}) => {
                         if (movies.length === 0) {
-                            return <Row className='main-view'><h2 className='mt-5'>Loading movies...</h2></Row>
+                            return <Row className='main-view'><h2 className='mt-5'>Loading director info...</h2></Row>
                         }
                         return <Col>
                             <DirectorView
@@ -110,11 +111,11 @@ export class MainView extends React.Component {
                     {/* Genre view */}
                     <Route path='/genres/:genreId' render={({match, history}) => {
                         if (movies.length === 0) {
-                            return <Row className='main-view'><h2 className='mt-5'>Loading movies...</h2></Row>
+                            return <Row className='main-view'><h2 className='mt-5'>Loading genre info...</h2></Row>
                         }
                         return <Col>
                             <GenreView
-                                movieData={movies.find(m => m.Genre.Name === match.params.genreId).Genre}
+                                movieData={movies.find(m => m.Genre.find(g => g._id === match.params.genreId))}
                                 onBackClick={() => history.goBack()}
                             />
                         </Col>
