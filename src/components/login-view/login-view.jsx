@@ -79,7 +79,7 @@ export function LoginView(props) {
                             </Form.Group>
                             <Button className='mt-2' variant="info" type="submit" onClick={handleSubmit}>Sign in</Button>
                         </Form>
-                        <p>Don't have an account yet? <a href="#">Create an account</a>.</p>
+                        <p>Don't have an account yet? <a href="./register">Create an account</a>.</p>
                         </Card.Body>
                     </Card>
                 </Col>

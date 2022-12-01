@@ -13,6 +13,7 @@ import { MovieView } from '../movie-view/movie-view';
 import { MenuBar } from '../navbar/navbar';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
+import { ProfileView } from '../profile-view/profile-view';
 
 
 import './main-view.scss';
@@ -116,6 +117,15 @@ export class MainView extends React.Component {
                         return <Col>
                             <GenreView
                                 movieData={movies.find(m => m.Genre.find(g => g._id === match.params.genreId))}
+                                onBackClick={() => history.goBack()}
+                            />
+                        </Col>
+                    }} />
+                    {/* Profile view */}
+                    <Route path='/users/:username' render={({match, history}) => {
+                        return <Col>
+                            <ProfileView
+                                username={match.params.username}
                                 onBackClick={() => history.goBack()}
                             />
                         </Col>
