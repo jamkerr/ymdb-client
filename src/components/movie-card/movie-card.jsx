@@ -8,24 +8,21 @@ import { FavoriteButton } from '../favourite-button/favourite-button';
 
 import './movie-card.scss';
 
-export class MovieCard extends React.Component {
-    render() {
-        const { movieData, favouriteMovies } = this.props;
+export function MovieCard(props) {
+    const { movieData, favouriteMovies } = props;
 
-        return (
-            <Card bg='secondary' className='movie-card h-100'>
-                <Card.Img src={movieData.ImageURL} />
-                <FavoriteButton movie={movieData} favouriteMovies={favouriteMovies} />
-                <Card.Body className='d-flex flex-column'>
-                    <Card.Title>{movieData.Title}</Card.Title>
-                    <Link to={`/movies/${movieData._id}`}>
-                        <Button className='mt-auto' variant='info'>Open</Button>
-                    </Link>
-                </Card.Body>
-            </Card>
-        );
-    }
-    
+    return (
+        <Card bg='secondary' className='movie-card h-100'>
+            <Card.Img src={movieData.ImageURL} />
+            <FavoriteButton movie={movieData} favouriteMovies={favouriteMovies} />
+            <Card.Body className='d-flex flex-column'>
+                <Card.Title>{movieData.Title}</Card.Title>
+                <Link to={`/movies/${movieData._id}`}>
+                    <Button className='mt-auto' variant='info'>Open</Button>
+                </Link>
+            </Card.Body>
+        </Card>
+    );    
 }
 
 MovieCard.propTypes = {

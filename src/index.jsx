@@ -7,14 +7,12 @@ import { MainView } from './components/main-view/main-view';
 import './index.scss';
 
 // Main component (will eventually use all the others)
-class YMDBApplication extends React.Component {
-render() {
-    return (
-      <Container className='everything-container'>
-        <MainView />
-      </Container>
-    );
-  }
+function YMDBApplication() {
+  return (
+    <Container className='everything-container'>
+      <MainView />
+    </Container>
+  );
 }
 
 // Finds the root of your app
