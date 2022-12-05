@@ -122,11 +122,11 @@ export class MainView extends React.Component {
                         </Col>
                     }} />
                     {/* Profile view */}
-                    <Route path='/users/:username' render={({match, history}) => {
+                    <Route path='/users/:username' render={({match}) => {
                         return <Col>
                             <ProfileView
                                 username={match.params.username}
-                                onBackClick={() => history.goBack()}
+                                movies={movies}
                             />
                         </Col>
                     }} />

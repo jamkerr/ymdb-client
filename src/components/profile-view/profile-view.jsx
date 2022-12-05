@@ -4,10 +4,14 @@ import axios from 'axios';
 
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
 
+import { FavoriteMovies } from './favourite-movies';
+
 import './profile-view.scss';
 
 
-export function ProfileView({username}) {
+export function ProfileView(props) {
+    let { movies, username} = props;
+
     const [ userData, setUserData ] = useState('');
 
     const [ currentUsername, setCurrentUsername ] = useState('');
@@ -129,6 +133,7 @@ export function ProfileView({username}) {
                         </Card.Body>
                     </Card>
                 </Col>
+                <FavoriteMovies favoriteMoviesList={movies.filter((m) => userData.FavoriteMovies.includes(m._id))} />
                 <Row>
                     <h2>Update Info</h2>
                 </Row>
@@ -193,6 +198,6 @@ export function ProfileView({username}) {
 }
 
 ProfileView.propTypes = {
-    onBackClick: PropTypes.func.isRequired,
+    movies: PropTypes.shape.isRequired,
     username: PropTypes.string.isRequired
 };
