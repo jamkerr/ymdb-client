@@ -24,7 +24,8 @@ export class MainView extends React.Component {
         super();
         this.state = {
             movies: [],
-            user: null
+            user: null,
+            favouriteMovies: []
         };
     }
 
@@ -45,7 +46,8 @@ export class MainView extends React.Component {
 
     onLoggedIn(authData) {
         this.setState({
-            user: authData.user.Username
+            user: authData.user.Username,
+            favouriteMovies: authData.user.FavoriteMovies
         });
 
         localStorage.setItem('token', authData.token);
@@ -53,7 +55,7 @@ export class MainView extends React.Component {
     }
 
     render() {
-        const { movies, user } = this.state;
+        const { movies, user, favouriteMovies } = this.state;
 
         return (
             <Router>
@@ -71,7 +73,7 @@ export class MainView extends React.Component {
                             } else {
                                 return movies.map(m => (
                                     <Col key={m._id} md={4}>
-                                        <MovieCard movieData={m} />
+                                        <MovieCard movieData={m} favouriteMovies={favouriteMovies} />
                                     </Col>
                                 ))
                             }

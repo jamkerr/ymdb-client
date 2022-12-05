@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
 
-import { FavoriteMovies } from './favourite-movies';
+import { FavouriteMovies } from './favourite-movies';
 
 import './profile-view.scss';
 
@@ -133,7 +133,7 @@ export function ProfileView(props) {
                         </Card.Body>
                     </Card>
                 </Col>
-                <FavoriteMovies favoriteMoviesList={movies.filter((m) => userData.FavoriteMovies.includes(m._id))} />
+                <FavouriteMovies favouriteMoviesList={movies.filter((m) => userData.FavoriteMovies.includes(m._id))} favouriteMovies={userData.FavoriteMovies} />
                 <Row>
                     <h2>Update Info</h2>
                 </Row>
