@@ -10,11 +10,16 @@ import './profile-view.scss';
 
 
 export function ProfileView(props) {
-    let { movies, username} = props;
+    let { movies } = props;
 
-    const [ userData, setUserData ] = useState('');
+    const storedUser = localStorage.getItem('user');
+    const storedToken = localStorage.getItem('token');
 
-    const [ currentUsername, setCurrentUsername ] = useState('');
+    const [ userData, setUserData ] = useState([]);
+
+    const [token, setToken] = useState(storedToken? storedToken : null);
+
+    const [ currentUsername, setCurrentUsername ] =  useState(storedUser? storedUser : null);;
     const [ password, setPassword ] = useState('');
     const [ email, setEmail ] = useState('');
     const [ birthday, setBirthday ] = useState('');
@@ -57,7 +62,7 @@ export function ProfileView(props) {
     }
     
     const getUserData = (token) => {
-        axios.get(`https://ymdeebee.herokuapp.com/users/${username}`, {
+        axios.get(`https://ymdeebee.herokuapp.com/users/${currentUsername}`, {
             headers: {Authorization: `Bearer ${token}`}
         })
         .then(response => {
@@ -69,18 +74,14 @@ export function ProfileView(props) {
     }
 
     useEffect(() => {
-        let accessToken = localStorage.getItem('token');
-        if (accessToken !== null) {
-            getUserData(accessToken)
-        }
-    }, []);
+        getUserData(token);
+    }, [userData]);
 
     const handleUpdate = async () => {
-        let token = localStorage.getItem('token');
         const isReq = validate();
         if (isReq) {
             try {
-                await axios.put(`https://ymdeebee.herokuapp.com/users/${username}`,
+                await axios.put(`https://ymdeebee.herokuapp.com/users/${currentUsername}`,
                 {
                     Username: currentUsername ? currentUsername : userData.Username,
                     Password: password ? password : userData.Password,
@@ -100,13 +101,12 @@ export function ProfileView(props) {
     }
 
     const handleDelete = async () => {
-        let token = localStorage.getItem('token');
         if (username && token) {
             let confirmDelete = confirm('Are you sure you want to permanently delete your account?');
             if (!confirmDelete) return;
 
             try {
-                await axios.delete(`https://ymdeebee.herokuapp.com/users/${username}`, {
+                await axios.delete(`https://ymdeebee.herokuapp.com/users/${currentUsername}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 alert('Your account was permanently deleted.');
@@ -127,7 +127,7 @@ export function ProfileView(props) {
                 <Col>
                     <Card bg='secondary' className='profile-card'>
                         <Card.Body>
-                            <Card.Title>Name: {username}</Card.Title>
+                            <Card.Title>Name: {currentUsername}</Card.Title>
                             <Card.Text>Email: {userData.Email}</Card.Text>
                             <Card.Text>Birthday: {userData.Birth_Date}</Card.Text>
                         </Card.Body>
@@ -198,6 +198,5 @@ export function ProfileView(props) {
 }
 
 ProfileView.propTypes = {
-    movies: PropTypes.shape.isRequired,
-    username: PropTypes.string.isRequired
+    movies: PropTypes.shape.isRequired
 };
