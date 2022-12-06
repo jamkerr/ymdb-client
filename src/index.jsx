@@ -9,7 +9,7 @@ import './index.scss';
 // Main component (will eventually use all the others)
 function YMDBApplication() {
   return (
-    <Container className='everything-container'>
+    <Container fluid className='everything-container p-0'>
       <MainView />
     </Container>
   );
