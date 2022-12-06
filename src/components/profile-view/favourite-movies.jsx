@@ -7,14 +7,14 @@ export function FavouriteMovies(props) {
     let { favouriteMoviesList, favouriteMovies } = props;
 
     return (
-        <div>
+        <>
             <h2>Favourite Movies</h2>
             {favouriteMoviesList.map(m => (
-                <Col key={m._id} md={4}>
+                <Col key={m._id} md={3}>
                     <MovieCard movieData={m} favouriteMovies={favouriteMovies} />
                 </Col>
             ))}
 
-        </div>
+        </>
     )
 }
