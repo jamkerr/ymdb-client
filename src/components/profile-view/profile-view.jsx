@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
 
-import { FavouriteMovies } from './favourite-movies';
+import { FavoriteMovies } from './favorite-movies';
 
 import './profile-view.scss';
 
@@ -17,7 +17,7 @@ export function ProfileView(props) {
 
     const [ userData, setUserData ] = useState([]);
 
-    const [token, setToken] = useState(storedToken? storedToken : null);
+    const [token, setToken] = useState(storedToken ? storedToken : null);
 
     const [ currentUsername, setCurrentUsername ] =  useState(storedUser? storedUser : null);;
     const [ password, setPassword ] = useState('');
@@ -133,7 +133,7 @@ export function ProfileView(props) {
                         </Card.Body>
                     </Card>
                 </Col>
-                <FavouriteMovies favouriteMoviesList={movies.filter((m) => userData.FavoriteMovies.includes(m._id))} favouriteMovies={userData.FavoriteMovies} />
+                <FavoriteMovies favoriteMoviesList={movies.filter((m) => userData.FavoriteMovies.includes(m._id))} favoriteMovies={userData.FavoriteMovies} />
                 <Row>
                     <h2>Update Info</h2>
                 </Row>

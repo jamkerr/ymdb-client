@@ -4,17 +4,17 @@ import { Button, Card } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 
-import { FavoriteButton } from '../favourite-button/favourite-button';
+import { FavoriteButton } from '../favorite-button/favorite-button';
 
 import './movie-card.scss';
 
 export function MovieCard(props) {
-    const { movieData, favouriteMovies } = props;
+    const { movieData, favoriteMovies } = props;
 
     return (
         <Card bg='secondary' className='movie-card h-100'>
             <Card.Img src={movieData.ImageURL} />
-            <FavoriteButton movie={movieData} favouriteMovies={favouriteMovies} />
+            <FavoriteButton movie={movieData} favoriteMovies={favoriteMovies} />
             <Card.Body className='d-flex flex-column'>
                 <Card.Title>{movieData.Title}</Card.Title>
                 <Link to={`/movies/${movieData._id}`}>
