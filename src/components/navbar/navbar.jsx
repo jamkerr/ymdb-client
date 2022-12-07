@@ -35,7 +35,7 @@ export function MenuBar({user}) {
                             <Nav.Link href='/register'>Create account</Nav.Link>
                         )}
                         {!isLoggedIn() && (
-                            <Nav.Link href='/login'>Sign in</Nav.Link>
+                            <Nav.Link href='/'>Sign in</Nav.Link>
                         )}
                     </Nav>
                 </Navbar.Collapse>

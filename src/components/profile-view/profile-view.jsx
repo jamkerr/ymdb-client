@@ -75,7 +75,7 @@ export function ProfileView(props) {
 
     useEffect(() => {
         getUserData(token);
-    }, [userData]);
+    }, []);
 
     const handleUpdate = async () => {
         const isReq = validate();
