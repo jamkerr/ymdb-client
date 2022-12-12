@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import {BrowserRouter, Routes, Route, Navigate, Redirect} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 
 import { Row, Col, Container } from 'react-bootstrap';
 
@@ -85,7 +85,7 @@ export function MainView () {
                         <Route path='/register' element={
                             <>
                                 {user ? (
-                                    <Redirect to='/' />
+                                    <Navigate to='/' />
                                 ) : (
                                     <Col>
                                         <RegistrationView />
