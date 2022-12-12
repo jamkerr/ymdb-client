@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { Card, Button, Link } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { FavoriteButton } from '../favorite-button/favorite-button';
+
 import './movie-view.scss';
 export function MovieView(props) {
-    const { movies } = props;
+    const { movies, favoriteMovies } = props;
     let { movieId } = useParams();
     let movieData = movies.find(m => m._id === movieId);
 
@@ -19,6 +21,7 @@ export function MovieView(props) {
                 <Button variant="link" href={`/directors/${movieData.Director.map(d => d._id)}`}>{movieData.Director.map(d => d.Name)}</Button>
                 <Button variant="link" href={`/genres/${movieData.Genre.map(g => g._id)}`}>{movieData.Genre.map(g => g.Name)}</Button>
                 <Card.Img className='movie-image mx-auto' src={movieData.ImageURL}/>
+                <FavoriteButton movie={movieData} favoriteMovies={favoriteMovies} />
                 <Button variant='info' className='mt-2' onClick={() => navigate(-1)}>Back</Button>
             </Card.Body>
         </Card>
