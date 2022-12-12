@@ -6,9 +6,8 @@ import { Button } from 'react-bootstrap';
 export function FavoriteButton(props) {
     let { movie, favoriteMovies } = props;
 
-    const [favorite, setFavorite] = useState(false);
+    const [favorite, setFavorite] = useState(favoriteMovies.includes(movie._id));
 
-    const isFavorite = favoriteMovies.includes(movie._id);
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("user");
 
@@ -18,7 +17,7 @@ export function FavoriteButton(props) {
 
     const toggleFavorite = async (movieTitle) => {
         // Delete movie if id exists in Favorite movies
-        if (isFavorite === true) {
+        if (favorite === true) {
             try {
                 setFavorite((prev) => !prev);
                 await axios.delete(`https://ymdeebee.herokuapp.com/users/${username}/favorites/${movieTitle}`, {
@@ -29,7 +28,7 @@ export function FavoriteButton(props) {
             }
         }
         // Add movie if id does not exist in Favorite movies
-        if (isFavorite === false) {
+        if (favorite === false) {
             try {
                 setFavorite((prev) => !prev);
                 await axios.put(`https://ymdeebee.herokuapp.com/users/${username}/favorites/${movieTitle}`, {}, {
