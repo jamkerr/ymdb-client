@@ -1,25 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import { Button, Card } from 'react-bootstrap';
+
+import { Link } from 'react-router-dom';
+
+import { FavoriteButton } from '../favorite-button/favorite-button';
 
 import './movie-card.scss';
 
-export class MovieCard extends React.Component {
-    render() {
-        const { movieData, onMovieClick } = this.props;
+export function MovieCard(props) {
+    const { movieData, favoriteMovies } = props;
 
-        return (
-            <Card bg='secondary' className='movie-card h-100'>
-                <Card.Body className='d-flex flex-column'>
-                    <Card.Title>{movieData.Title}</Card.Title>
-                    <Card.Text>{movieData.Description}</Card.Text>
-                    <Button className='mt-auto' variant='info' onClick={() => onMovieClick(movieData)}>Open</Button>
-                </Card.Body>
-            </Card>
-        );
-    }
-    
+    return (
+        <Card bg='secondary' className='movie-card h-100'>
+            <Card.Img src={movieData.ImageURL} />
+            <FavoriteButton movie={movieData} favoriteMovies={favoriteMovies} />
+            <Card.Body className='d-flex flex-column'>
+                <Card.Title>{movieData.Title}</Card.Title>
+                <Link to={`/movies/${movieData._id}`}>
+                    <Button className='mt-auto' variant='info'>Open</Button>
+                </Link>
+            </Card.Body>
+        </Card>
+    );    
 }
 
 MovieCard.propTypes = {
@@ -27,6 +30,5 @@ MovieCard.propTypes = {
         Title: PropTypes.string.isRequired,
         Description: PropTypes.string.isRequired,
         ImageURL: PropTypes.string
-    }).isRequired,
-    onMovieClick: PropTypes.func.isRequired
+    }).isRequired
 };
