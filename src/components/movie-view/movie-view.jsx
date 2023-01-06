@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, Button, Link } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { FavoriteButton } from '../favorite-button/favorite-button';
 
@@ -30,13 +30,3 @@ export function MovieView(props) {
         </Card>
     );
 }
-
-// MovieView.propTypes = {
-//     movies: PropTypes.shape({
-//         Title: PropTypes.string.isRequired,
-//         Description: PropTypes.string.isRequired,
-//         ImageURL: PropTypes.string.isRequired,
-//         Director: PropTypes.array.isRequired,
-//         Genre: PropTypes.array.isRequired
-//     }).isRequired
-// };
