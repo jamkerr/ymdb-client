@@ -119,9 +119,7 @@ export function MainView () {
                                     <Row className='main-view'><h2 className='mt-5'>Loading director info...</h2></Row>
                                 ) : (
                                 <Col>
-                                    <DirectorView
-                                        movies={movies}
-                                    />
+                                    <DirectorView />
                                 </Col>
                                 )}
                             </>

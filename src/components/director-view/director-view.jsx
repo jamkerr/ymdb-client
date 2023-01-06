@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { Card, Button } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { useSelector } from "react-redux";
+
 import './director-view.scss';
 
-export function DirectorView(props) {
+export function DirectorView() {
 
-    const { movies } = props;
+    const movies = useSelector((state) => state.movies);
     let { directorId } = useParams();
     let movieData = movies.find(m => m.Director.find(d => d._id === directorId));
     const navigate = useNavigate();
@@ -22,9 +24,3 @@ export function DirectorView(props) {
         </Card>
     );
 }
-
-DirectorView.propTypes = {
-    movies: PropTypes.shape({
-        Director: PropTypes.array.isRequired
-    }).isRequired
-};
