@@ -1,13 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Card, Button } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { useSelector } from "react-redux";
+
 import './genre-view.scss';
 
-export function GenreView(props) {
+export function GenreView() {
 
-    const { movies } = props;
+    const movies = useSelector((state) => state.movies);
     let { genreId } = useParams();
     let movieData = movies.find(m => m.Genre.find(g => g._id === genreId));
     const navigate = useNavigate();
@@ -22,9 +23,3 @@ export function GenreView(props) {
         </Card>
     );
 }
-
-GenreView.propTypes = {
-    movies: PropTypes.shape({
-        Genre: PropTypes.array.isRequired
-    }).isRequired
-};
