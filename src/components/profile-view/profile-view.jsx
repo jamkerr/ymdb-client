@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
+
+import { useSelector } from 'react-redux';
 
 import { FavoriteMovies } from './favorite-movies';
 
 import './profile-view.scss';
 
 
-export function ProfileView(props) {
-    let { movies } = props;
+export function ProfileView() {
+
+    const movies = useSelector((state) => state.movies);
 
     const storedUser = localStorage.getItem('user');
     const storedToken = localStorage.getItem('token');
@@ -196,7 +198,3 @@ export function ProfileView(props) {
         </Container>
     );
 }
-
-ProfileView.propTypes = {
-    movies: PropTypes.shape.isRequired
-};
