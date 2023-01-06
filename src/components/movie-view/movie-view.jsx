@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Card, Button, Link } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
