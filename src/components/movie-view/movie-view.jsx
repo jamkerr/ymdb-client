@@ -7,7 +7,8 @@ import { FavoriteButton } from '../favorite-button/favorite-button';
 
 import './movie-view.scss';
 export function MovieView(props) {
-    const { movies, favoriteMovies } = props;
+    const { favoriteMovies } = props;
+    const movies = useSelector((state) => state.movies);
     let { movieId } = useParams();
     let movieData = movies.find(m => m._id === movieId);
 

@@ -14,16 +14,20 @@ import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
 
+import { useSelector, useDispatch } from "react-redux";
+import { setMovies } from "../../redux/reducers/movies";
 
 import './main-view.scss';
 
 export function MainView () {
 
+    const movies = useSelector((state) => state.movies);
+    const dispatch = useDispatch();
+
     // const storedUser = JSON.parse(localStorage.getItem('user'));
     const storedUser = localStorage.getItem('user');
     const storedToken = localStorage.getItem('token');
 
-    const [ movies, setMovies ] = useState([]);
     const [ user, setUser ] =  useState(storedUser ? storedUser : null);
     const [ token, setToken ] = useState(storedToken ? storedToken : null);
     const [ favoriteMovies, setFavoriteMovies ] = useState([]);
@@ -34,7 +38,7 @@ export function MainView () {
         })
         .then(response => {
             // Assign the result to state
-            setMovies(response.data);
+            dispatch(setMovies(response.data));
         })
         .catch(error => {
             console.log(error);
@@ -101,7 +105,6 @@ export function MainView () {
                                 ) : (
                                 <Col>
                                     <MovieView
-                                        movies={movies}
                                         favoriteMovies={favoriteMovies}
                                     />
                                 </Col>
