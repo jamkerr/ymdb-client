@@ -131,9 +131,7 @@ export function MainView () {
                                     <Row className='main-view'><h2 className='mt-5'>Loading genre info...</h2></Row>
                                 ) : (
                                 <Col>
-                                    <GenreView
-                                        movies={movies}
-                                    />
+                                    <GenreView />
                                 </Col>
                                 )}
                             </>
@@ -141,9 +139,7 @@ export function MainView () {
                         {/* Profile view */}
                         <Route path='/users/:username' element={
                             <Col>
-                                <ProfileView
-                                    movies={movies}
-                                />
+                                <ProfileView />
                             </Col>
                         } />
                     </Routes>
