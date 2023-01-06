@@ -22,13 +22,11 @@ import './main-view.scss';
 export function MainView () {
 
     const movies = useSelector((state) => state.movies);
+    const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
-    // const storedUser = JSON.parse(localStorage.getItem('user'));
-    const storedUser = localStorage.getItem('user');
     const storedToken = localStorage.getItem('token');
 
-    const [ user, setUser ] =  useState(storedUser ? storedUser : null);
     const [ token, setToken ] = useState(storedToken ? storedToken : null);
     const [ favoriteMovies, setFavoriteMovies ] = useState([]);
 
@@ -46,18 +44,15 @@ export function MainView () {
     }
 
     const onLoggedIn = (authData) => {
-        setUser( authData.user.Username );
         setFavoriteMovies( authData.user.FavoriteMovies );
 
         localStorage.setItem('token', authData.token);
-        localStorage.setItem('user', authData.user.Username);
 
         setToken(localStorage.getItem('token'));
     }
 
     useEffect(() => {
         if (token !== null) {
-            setUser( localStorage.getItem('user') );
             getMovies(token);
         }
     }, [token]);

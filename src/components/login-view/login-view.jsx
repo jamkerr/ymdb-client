@@ -8,11 +8,17 @@ import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
 
 import './login-view.scss';
 
 
 export function LoginView(props) {
+
+    const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     // Declare hook for each input
@@ -51,6 +57,7 @@ export function LoginView(props) {
             })
             .then(response => {
                 const data = response.data;
+                dispatch(setUser(data.user.Username));
                 props.onLoggedIn(data);
             })
             .catch(e => {
