@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/esm/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
-import { useSelector } from "react-redux";
+import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
 
 import './login-view.scss';
 
 
 export function LoginView(props) {
-
-    const user = useSelector((state) => state.user);
 
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
@@ -27,18 +18,18 @@ export function LoginView(props) {
     const validate = () => {
         let isReq = true;
         if (!username) {
-        setUsernameErr('Username Required');
-        isReq = false;
+            setUsernameErr('Username Required');
+            isReq = false;
         } else if (username.length < 2) {
-        setUsernameErr('Username must be at least 2 characters long');
-        isReq = false;
+            setUsernameErr('Username must be at least 2 characters long');
+            isReq = false;
         }
         if (!password) {
-        setPasswordErr('Password Required');
-        isReq = false;
+            setPasswordErr('Password Required');
+            isReq = false;
         } else if (password.length < 6) {
-        setPasswordErr('Password must be at least 6 characters long');
-        isReq = false;
+            setPasswordErr('Password must be at least 6 characters long');
+            isReq = false;
         }
 
         return isReq;
