@@ -13,7 +13,7 @@ import './profile-view.scss';
 export function ProfileView() {
 
     const user = useSelector((state) => state.user)
-    const movies = useSelector((state) => state.movies);
+    const movies = useSelector((state) => state.movies.list);
 
     const token = localStorage.getItem('token');
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
@@ -7,7 +7,7 @@ import { Row, Col, Container } from 'react-bootstrap';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { MovieCard } from '../movie-card/movie-card';
+import { MoviesList } from '../movies-list/movies-list';
 import { MovieView } from '../movie-view/movie-view';
 import { MenuBar } from '../navbar/navbar';
 import { DirectorView } from '../director-view/director-view';
@@ -22,7 +22,7 @@ import './main-view.scss';
 
 export function MainView () {
 
-    const movies = useSelector((state) => state.movies);
+    const movies = useSelector((state) => state.movies.list);
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
@@ -42,9 +42,9 @@ export function MainView () {
     }
 
     const onLoggedIn = (authData) => {
-        dispatch(setUser(authData.user));
-
         localStorage.setItem('token', authData.token);
+
+        dispatch(setUser(authData.user));
     }
 
     useEffect(() => {
@@ -63,16 +63,10 @@ export function MainView () {
                         <Route path='/' element={
                             <>
                             {!user ? (
-                                        <LoginView onLoggedIn={authResponse => onLoggedIn(authResponse)} />
-                                    ) : movies.length === 0 ? (
-                                        <Row className='main-view'><h2 className='mt-5'>Loading movies...</h2></Row>
-                                    ) : (
-                                        movies.map(m => (
-                                            <Col key={m._id} md={4}>
-                                                <MovieCard movieData={m} />
-                                            </Col>
-                                        ))
-                                    )
+                                    <LoginView onLoggedIn={authResponse => onLoggedIn(authResponse)} />
+                                ) : (
+                                    <MoviesList />
+                                )
                             }
                             </>
                         } />

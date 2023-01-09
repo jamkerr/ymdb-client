@@ -8,7 +8,7 @@ import './director-view.scss';
 
 export function DirectorView() {
 
-    const movies = useSelector((state) => state.movies);
+    const movies = useSelector((state) => state.movies.list);
     let { directorId } = useParams();
     let movieData = movies.find(m => m.Director.find(d => d._id === directorId));
     const navigate = useNavigate();

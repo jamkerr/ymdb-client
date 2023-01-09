@@ -8,7 +8,7 @@ import './genre-view.scss';
 
 export function GenreView() {
 
-    const movies = useSelector((state) => state.movies);
+    const movies = useSelector((state) => state.movies.list);
     let { genreId } = useParams();
     let movieData = movies.find(m => m.Genre.find(g => g._id === genreId));
     const navigate = useNavigate();
