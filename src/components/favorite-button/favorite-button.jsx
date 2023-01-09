@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { favoriteAdded, favoriteRemoved } from '../../redux/reducers/user';
 
 import { Button } from 'react-bootstrap';
 
 export function FavoriteButton(props) {
     const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
 
     let { movie } = props;
-    let favoriteMovies = user.FavoriteMovies;
 
-    const [favorite, setFavorite] = useState(favoriteMovies.includes(movie._id));
+    const [favorite, setFavorite] = useState(user.FavoriteMovies.includes(movie._id));
 
     const token = localStorage.getItem("token");
     const username = user.Username;
@@ -19,12 +21,13 @@ export function FavoriteButton(props) {
     const favIcon = 'Favorite';
     const unfavIcon = 'Unfavorite';
 
-    const toggleFavorite = async (movieTitle) => {
+    const toggleFavorite = async () => {
         // Delete movie if id exists in Favorite movies
         if (favorite === true) {
             try {
                 setFavorite((prev) => !prev);
-                await axios.delete(`https://ymdeebee.herokuapp.com/users/${username}/favorites/${movieTitle}`, {
+                dispatch(favoriteRemoved(movie._id));
+                await axios.delete(`https://ymdeebee.herokuapp.com/users/${username}/favorites/${movie.Title}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
             } catch (error) {
@@ -35,7 +38,8 @@ export function FavoriteButton(props) {
         if (favorite === false) {
             try {
                 setFavorite((prev) => !prev);
-                await axios.put(`https://ymdeebee.herokuapp.com/users/${username}/favorites/${movieTitle}`, {}, {
+                dispatch(favoriteAdded(movie._id));
+                await axios.put(`https://ymdeebee.herokuapp.com/users/${username}/favorites/${movie.Title}`, {}, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
             } catch (error) {
@@ -46,7 +50,7 @@ export function FavoriteButton(props) {
 
     return (
         <Button
-            onClick={() => toggleFavorite(movie.Title)}
+            onClick={() => toggleFavorite()}
             className="favorite-button"
             key={movie._Id}
         >
