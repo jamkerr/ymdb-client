@@ -1,9 +1,14 @@
 import React from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+import { useSelector } from "react-redux";
 
 import './navbar.scss';
 
-export function MenuBar({user}) {
+export function MenuBar() {
+
+    const user = useSelector((state) => state.user);
 
     const onLoggedOut = () => {
         localStorage.clear();
@@ -11,8 +16,8 @@ export function MenuBar({user}) {
     }
 
     const isLoggedIn = () => {
-        if (localStorage.getItem('token')) {
-            return localStorage.getItem('token');
+        if ( user ) {
+            return true;
         } else {
             return false;
         }
@@ -21,12 +26,16 @@ export function MenuBar({user}) {
     return (
         <Navbar variant='dark' bg='dark' sticky='top'>
             <Container>
-                <Navbar.Brand className='navbar-logo' href='/'>YMDB</Navbar.Brand>
+                <Link to='/'>
+                    <Navbar.Brand className='navbar-logo'>YMDB</Navbar.Brand>
+                </Link>
                 <Navbar.Toggle aria-controls='basic-navbar-nav' />
                 <Navbar.Collapse>
                     <Nav className='ms-auto'>
                         {isLoggedIn() && (
-                            <Nav.Link href={`/users/${user}`}>{user}</Nav.Link>
+                            <Link to={`/users/${user.Username}`}>
+                                <Nav.Link as={Button}>{user.Username}</Nav.Link>
+                            </Link>
                         )}
                         {isLoggedIn() && (
                             <Button variant='link' onClick={onLoggedOut}>Sign out</Button>
