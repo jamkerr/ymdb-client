@@ -12,16 +12,14 @@ import './profile-view.scss';
 
 export function ProfileView() {
 
+    const user = useSelector((state) => state.user)
     const movies = useSelector((state) => state.movies);
 
-    const storedUser = localStorage.getItem('user');
     const storedToken = localStorage.getItem('token');
-
-    const [ userData, setUserData ] = useState([]);
 
     const [token, setToken] = useState(storedToken ? storedToken : null);
 
-    const [ currentUsername, setCurrentUsername ] =  useState(storedUser? storedUser : null);;
+    const [ currentUsername, setCurrentUsername ] =  useState(user ? user.Username : null);;
     const [ password, setPassword ] = useState('');
     const [ email, setEmail ] = useState('');
     const [ birthday, setBirthday ] = useState('');
@@ -63,21 +61,21 @@ export function ProfileView() {
         return isReq;
     }
     
-    const getUserData = (token) => {
-        axios.get(`https://ymdeebee.herokuapp.com/users/${currentUsername}`, {
-            headers: {Authorization: `Bearer ${token}`}
-        })
-        .then(response => {
-            setUserData(response.data);
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    }
+    // const getUserData = (token) => {
+    //     axios.get(`https://ymdeebee.herokuapp.com/users/${currentUsername}`, {
+    //         headers: {Authorization: `Bearer ${token}`}
+    //     })
+    //     .then(response => {
+    //         setUserData(response.data);
+    //     })
+    //     .catch(error => {
+    //         console.log(error);
+    //     });
+    // }
 
-    useEffect(() => {
-        getUserData(token);
-    }, []);
+    // useEffect(() => {
+    //     dispatch(setUser(user));;
+    // }, []);
 
     const handleUpdate = async () => {
         const isReq = validate();
@@ -85,16 +83,15 @@ export function ProfileView() {
             try {
                 await axios.put(`https://ymdeebee.herokuapp.com/users/${currentUsername}`,
                 {
-                    Username: currentUsername ? currentUsername : userData.Username,
-                    Password: password ? password : userData.Password,
-                    Email: email ? email : userData.Email,
-                    Birth_Date: birthday ? birthday : userData.Birth_Date
+                    Username: currentUsername ? currentUsername : user.Username,
+                    Password: password ? password : user.Password,
+                    Email: email ? email : user.Email,
+                    Birth_Date: birthday ? birthday : user.Birth_Date
                 },
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 alert('Your account info was updated.');
-                localStorage.setItem('user', currentUsername);
                 window.open(`/${currentUsername}`, '_self');
             } catch (error) {
                 console.log(error);
@@ -122,79 +119,83 @@ export function ProfileView() {
 
     return (
         <Container className='profile-container d-flex justify-content-center align-items-center'>
-            <Row xs={1} >
-                <Row>
-                    <h2>Your Profile</h2>
+            {(!user) ?
+                <h2>Loading Your Profile</h2>
+                :
+                <Row xs={1} >
+                    <Row>
+                        <h2>Your Profile</h2>
+                    </Row>
+                    <Col>
+                        <Card bg='secondary' className='profile-card'>
+                            <Card.Body>
+                                <Card.Title>Name: {currentUsername}</Card.Title>
+                                <Card.Text>Email: {user.Email}</Card.Text>
+                                <Card.Text>Birthday: {user.Birth_Date}</Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <FavoriteMovies favoriteMoviesList={movies.filter((m) => user.FavoriteMovies.includes(m._id))} favoriteMovies={user.FavoriteMovies} />
+                    <Row>
+                        <h2>Update Info</h2>
+                    </Row>
+                    <Col>
+                        <Card bg="dark">
+                            <Card.Body>
+                                <Form>
+                                    <Form.Group>
+                                        <Form.Label>Username:</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            value={currentUsername}
+                                            onChange={e => setCurrentUsername(e.target.value)}
+                                        />
+                                        {currentUsernameErr && <p>{currentUsernameErr}</p>}
+                                    </Form.Group>
+                                    <Form.Group>
+                                        <Form.Label>Password:</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            value={password}
+                                            onChange={e => setPassword(e.target.value)}
+                                        />
+                                        {passwordErr && <p>{passwordErr}</p>}
+                                    </Form.Group>
+                                    <Form.Group>
+                                        <Form.Label>Email:</Form.Label>
+                                        <Form.Control
+                                            type="email"
+                                            value={email}
+                                            onChange={e => setEmail(e.target.value)}
+                                        />
+                                        {emailErr && <p>{emailErr}</p>}
+                                    </Form.Group>
+                                    <Form.Group>
+                                        <Form.Label>Birthday:</Form.Label>
+                                        <Form.Control
+                                            type="date"
+                                            value={birthday}
+                                            onChange={e => setBirthday(e.target.value)}
+                                        />
+                                        {birthdayErr && <p>{birthdayErr}</p>}
+                                    </Form.Group>
+                                    <Button className='mt-2' variant="info" onClick={() => { handleUpdate() }} >Update Info</Button>
+                                </Form>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Row>
+                        <h2>Delete Account</h2>
+                    </Row>
+                    <Col>
+                        <Card bg="dark">
+                            <Card.Body>
+                                <Button variant="danger" onClick={() => { handleDelete() }} >Delete Account</Button>
+                            </Card.Body>
+                        </Card>
+                    </Col>
                 </Row>
-                <Col>
-                    <Card bg='secondary' className='profile-card'>
-                        <Card.Body>
-                            <Card.Title>Name: {currentUsername}</Card.Title>
-                            <Card.Text>Email: {userData.Email}</Card.Text>
-                            <Card.Text>Birthday: {userData.Birth_Date}</Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <FavoriteMovies favoriteMoviesList={movies.filter((m) => userData.FavoriteMovies.includes(m._id))} favoriteMovies={userData.FavoriteMovies} />
-                <Row>
-                    <h2>Update Info</h2>
-                </Row>
-                <Col>
-                    <Card bg="dark">
-                        <Card.Body>
-                            <Form>
-                                <Form.Group>
-                                    <Form.Label>Username:</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        value={currentUsername}
-                                        onChange={e => setCurrentUsername(e.target.value)}
-                                    />
-                                    {currentUsernameErr && <p>{currentUsernameErr}</p>}
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Password:</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        value={password}
-                                        onChange={e => setPassword(e.target.value)}
-                                    />
-                                    {passwordErr && <p>{passwordErr}</p>}
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Email:</Form.Label>
-                                    <Form.Control
-                                        type="email"
-                                        value={email}
-                                        onChange={e => setEmail(e.target.value)}
-                                    />
-                                    {emailErr && <p>{emailErr}</p>}
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label>Birthday:</Form.Label>
-                                    <Form.Control
-                                        type="date"
-                                        value={birthday}
-                                        onChange={e => setBirthday(e.target.value)}
-                                    />
-                                    {birthdayErr && <p>{birthdayErr}</p>}
-                                </Form.Group>
-                                <Button className='mt-2' variant="info" onClick={() => { handleUpdate() }} >Update Info</Button>
-                            </Form>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Row>
-                    <h2>Delete Account</h2>
-                </Row>
-                <Col>
-                    <Card bg="dark">
-                        <Card.Body>
-                            <Button variant="danger" onClick={() => { handleDelete() }} >Delete Account</Button>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
+            }
         </Container>
     );
 }

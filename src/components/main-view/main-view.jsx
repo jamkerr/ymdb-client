@@ -16,6 +16,7 @@ import { ProfileView } from '../profile-view/profile-view';
 
 import { useSelector, useDispatch } from "react-redux";
 import { setMovies } from "../../redux/reducers/movies";
+import { setUser } from "../../redux/reducers/user";
 
 import './main-view.scss';
 
@@ -26,8 +27,8 @@ export function MainView () {
     const dispatch = useDispatch();
 
     const storedToken = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
-    const [ token, setToken ] = useState(storedToken ? storedToken : null);
     const [ favoriteMovies, setFavoriteMovies ] = useState([]);
 
     const getMovies = (token) => {
@@ -46,9 +47,9 @@ export function MainView () {
     const onLoggedIn = (authData) => {
         setFavoriteMovies( authData.user.FavoriteMovies );
 
-        localStorage.setItem('token', authData.token);
+        dispatch(setUser(authData.user));
 
-        setToken(localStorage.getItem('token'));
+        localStorage.setItem('token', authData.token);
     }
 
     useEffect(() => {
@@ -59,7 +60,7 @@ export function MainView () {
 
     return (
         <BrowserRouter>
-            <MenuBar user={user}></MenuBar>
+            <MenuBar />
             <Container className='mt-5'>
                 <Row className='main-view g-5'>
                     <Routes>
@@ -106,7 +107,6 @@ export function MainView () {
                                 )}
                             </>
                         } />
-
                         {/* Director view */}
                         <Route path='/directors/:directorId' element={
                             <>
