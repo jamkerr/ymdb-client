@@ -15,9 +15,7 @@ export function ProfileView() {
     const user = useSelector((state) => state.user)
     const movies = useSelector((state) => state.movies);
 
-    const storedToken = localStorage.getItem('token');
-
-    const [token, setToken] = useState(storedToken ? storedToken : null);
+    const token = localStorage.getItem('token');
 
     const [ currentUsername, setCurrentUsername ] =  useState(user ? user.Username : null);;
     const [ password, setPassword ] = useState('');
@@ -135,7 +133,7 @@ export function ProfileView() {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <FavoriteMovies favoriteMoviesList={movies.filter((m) => user.FavoriteMovies.includes(m._id))} favoriteMovies={user.FavoriteMovies} />
+                    <FavoriteMovies favoriteMoviesList={movies.filter((m) => user.FavoriteMovies.includes(m._id))} />
                     <Row>
                         <h2>Update Info</h2>
                     </Row>

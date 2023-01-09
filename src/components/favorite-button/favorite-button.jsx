@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useSelector } from "react-redux";
 
 import { Button } from 'react-bootstrap';
 
 export function FavoriteButton(props) {
-    let { movie, favoriteMovies } = props;
+    const user = useSelector((state) => state.user);
+
+    let { movie } = props;
+    let favoriteMovies = user.FavoriteMovies;
 
     const [favorite, setFavorite] = useState(favoriteMovies.includes(movie._id));
 
     const token = localStorage.getItem("token");
-    const username = localStorage.getItem("user");
+    const username = user.Username;
 
     // Favorite and Unfavorite content
     const favIcon = 'Favorite';

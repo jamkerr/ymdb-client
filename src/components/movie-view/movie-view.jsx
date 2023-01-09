@@ -7,8 +7,7 @@ import { useSelector } from "react-redux";
 import { FavoriteButton } from '../favorite-button/favorite-button';
 
 import './movie-view.scss';
-export function MovieView(props) {
-    const { favoriteMovies } = props;
+export function MovieView() {
     const movies = useSelector((state) => state.movies);
     let { movieId } = useParams();
     let movieData = movies.find(m => m._id === movieId);
@@ -27,7 +26,7 @@ export function MovieView(props) {
                     <Button variant='info'>{movieData.Genre.map(g => g.Name)}</Button>
                 </Link>
                 <Card.Img className='movie-image mx-auto' src={movieData.ImageURL}/>
-                <FavoriteButton movie={movieData} favoriteMovies={favoriteMovies} />
+                <FavoriteButton movie={movieData} />
                 <Button variant='info' className='mt-2' onClick={() => navigate(-1)}>Back</Button>
             </Card.Body>
         </Card>

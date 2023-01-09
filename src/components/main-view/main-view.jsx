@@ -26,10 +26,7 @@ export function MainView () {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
-    const storedToken = localStorage.getItem('token');
     const token = localStorage.getItem('token');
-
-    const [ favoriteMovies, setFavoriteMovies ] = useState([]);
 
     const getMovies = (token) => {
         axios.get('https://ymdeebee.herokuapp.com/movies', {
@@ -45,8 +42,6 @@ export function MainView () {
     }
 
     const onLoggedIn = (authData) => {
-        setFavoriteMovies( authData.user.FavoriteMovies );
-
         dispatch(setUser(authData.user));
 
         localStorage.setItem('token', authData.token);
@@ -68,16 +63,16 @@ export function MainView () {
                         <Route path='/' element={
                             <>
                             {!user ? (
-                                        <LoginView onLoggedIn={user => onLoggedIn(user)} />
+                                        <LoginView onLoggedIn={authResponse => onLoggedIn(authResponse)} />
                                     ) : movies.length === 0 ? (
                                         <Row className='main-view'><h2 className='mt-5'>Loading movies...</h2></Row>
                                     ) : (
                                         movies.map(m => (
                                             <Col key={m._id} md={4}>
-                                                <MovieCard movieData={m} favoriteMovies={favoriteMovies} />
+                                                <MovieCard movieData={m} />
                                             </Col>
                                         ))
-                                    )                               
+                                    )
                             }
                             </>
                         } />
@@ -100,9 +95,7 @@ export function MainView () {
                                     <Row className='main-view'></Row>
                                 ) : (
                                 <Col>
-                                    <MovieView
-                                        favoriteMovies={favoriteMovies}
-                                    />
+                                    <MovieView />
                                 </Col>
                                 )}
                             </>

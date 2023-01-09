@@ -9,12 +9,12 @@ import { FavoriteButton } from '../favorite-button/favorite-button';
 import './movie-card.scss';
 
 export function MovieCard(props) {
-    const { movieData, favoriteMovies } = props;
+    const { movieData } = props;
 
     return (
         <Card bg='secondary' className='movie-card h-100'>
             <Card.Img src={movieData.ImageURL} />
-            <FavoriteButton movie={movieData} favoriteMovies={favoriteMovies} />
+            <FavoriteButton movie={movieData} />
             <Card.Body className='d-flex flex-column'>
                 <Card.Title>{movieData.Title}</Card.Title>
                 <Link to={`/movies/${movieData._id}`}>
