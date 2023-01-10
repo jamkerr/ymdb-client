@@ -22,18 +22,21 @@ import './main-view.scss';
 
 export function MainView () {
 
+    // Use redux toolkit to get state of movies and user
     const movies = useSelector((state) => state.movies.list);
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
+    // Token is stored in local storage
     const token = localStorage.getItem('token');
 
+    // Use axios to make API call to get movies array. Requires token.
     const getMovies = (token) => {
         axios.get('https://ymdeebee.herokuapp.com/movies', {
             headers: {Authorization: `Bearer ${token}`}
         })
         .then(response => {
-            // Assign the result to state
+            // Assign the movies array to state
             dispatch(setMovies(response.data));
         })
         .catch(error => {
@@ -41,12 +44,13 @@ export function MainView () {
         });
     }
 
+    // When logged in, save token to local storage, and set user to state
     const onLoggedIn = (authData) => {
         localStorage.setItem('token', authData.token);
-
         dispatch(setUser(authData.user));
     }
 
+    // When token changes and exists, use it to get movies
     useEffect(() => {
         if (token !== null) {
             getMovies(token);
@@ -59,7 +63,7 @@ export function MainView () {
             <Container className='mt-5'>
                 <Row className='main-view g-5'>
                     <Routes>
-                        {/* Card list: Show MovieCards for each movie, make movieData prop available */}
+                        {/* If no user in state, show login page. Otherwise, show the main movies list. */}
                         <Route path='/' element={
                             <>
                             {!user ? (
@@ -82,7 +86,7 @@ export function MainView () {
                                 )}
                             </>
                         } />
-                        {/* Movie view: show MovieView for that movie, make that movieData prop available */}
+                        {/* Movie view: show MovieView for a single movie. */}
                         <Route path='/movies/:movieId' element={
                             <>
                                 { movies.length === 0 ? (

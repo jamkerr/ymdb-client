@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { FavoriteMovies } from './favorite-movies';
 
 import './profile-view.scss';
-
 
 export function ProfileView() {
 
@@ -58,22 +57,6 @@ export function ProfileView() {
 
         return isReq;
     }
-    
-    // const getUserData = (token) => {
-    //     axios.get(`https://ymdeebee.herokuapp.com/users/${currentUsername}`, {
-    //         headers: {Authorization: `Bearer ${token}`}
-    //     })
-    //     .then(response => {
-    //         setUserData(response.data);
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     });
-    // }
-
-    // useEffect(() => {
-    //     dispatch(setUser(user));;
-    // }, []);
 
     const handleUpdate = async () => {
         const isReq = validate();

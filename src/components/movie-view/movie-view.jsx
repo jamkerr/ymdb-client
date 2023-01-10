@@ -8,11 +8,12 @@ import { FavoriteButton } from '../favorite-button/favorite-button';
 
 import './movie-view.scss';
 export function MovieView() {
+    const navigate = useNavigate();
+
     const movies = useSelector((state) => state.movies.list);
     let { movieId } = useParams();
+    // Find movie data that matches particular movie
     let movieData = movies.find(m => m._id === movieId);
-
-    const navigate = useNavigate();
 
     return (
         <Card className='movie-view' bg='secondary'>
