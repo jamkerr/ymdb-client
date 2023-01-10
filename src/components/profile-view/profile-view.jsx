@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import moment from "moment/moment";
 
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { FavoriteMovies } from './favorite-movies';
+
+import { setUser } from '../../redux/reducers/user';
 
 import './profile-view.scss';
 
@@ -13,6 +16,7 @@ export function ProfileView() {
 
     const user = useSelector((state) => state.user)
     const movies = useSelector((state) => state.movies.list);
+    const dispatch = useDispatch();
 
     const token = localStorage.getItem('token');
 
@@ -62,7 +66,7 @@ export function ProfileView() {
         const isReq = validate();
         if (isReq) {
             try {
-                await axios.put(`https://ymdeebee.herokuapp.com/users/${currentUsername}`,
+                await axios.put(`https://ymdeebee.herokuapp.com/users/${user.Username}`,
                 {
                     Username: currentUsername ? currentUsername : user.Username,
                     Password: password ? password : user.Password,
@@ -73,7 +77,19 @@ export function ProfileView() {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 alert('Your account info was updated.');
-                window.open(`/${currentUsername}`, '_self');
+            } catch (error) {
+                console.log(error);
+            }
+
+            try {
+                await axios.post('https://ymdeebee.herokuapp.com/login', {
+                    Username: currentUsername,
+                    Password: password
+                })
+                .then(response => {
+                    localStorage.setItem('token', response.data.token);
+                    dispatch(setUser(response.data.user));
+                })
             } catch (error) {
                 console.log(error);
             }
@@ -112,7 +128,7 @@ export function ProfileView() {
                             <Card.Body>
                                 <Card.Title>Name: {currentUsername}</Card.Title>
                                 <Card.Text>Email: {user.Email}</Card.Text>
-                                <Card.Text>Birthday: {user.Birth_Date}</Card.Text>
+                                <Card.Text>Birthday: {moment(user.Birth_Date).format('Do MMMM YYYY')} </Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>
