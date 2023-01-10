@@ -15,7 +15,7 @@ export function DirectorView() {
 
     return (
         <Card className='director-view' bg='dark'>
-            <Card.Body>
+            <Card.Body className='px-5 pb-4'>
                 <Card.Title className='director-name'>Director: {movieData.Director.map(d => d.Name)}</Card.Title>
                 <Card.Text className='director-bio'>{movieData.Director.map(d => d.Bio)}</Card.Text>
                 <Button variant='outline-light' className='mt-2' onClick={() => navigate(-1)}>Back</Button>

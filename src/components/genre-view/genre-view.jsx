@@ -15,7 +15,7 @@ export function GenreView() {
 
     return (
         <Card className='director-view' bg='dark'>
-                <Card.Body>
+                <Card.Body className='px-5 pb-4'>
                     <Card.Title className='genre-name'>Genre: {movieData.Genre.map(g => g.Name)}</Card.Title>
                     <Card.Text className='genre-description'>{movieData.Genre.map(g => g.Description)}</Card.Text>
                     <Button variant='outline-light' className='mt-2' onClick={() => navigate(-1)}>Back</Button>
