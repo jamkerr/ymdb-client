@@ -97,12 +97,12 @@ export function ProfileView() {
     }
 
     const handleDelete = async () => {
-        if (username && token) {
+        if (user && token) {
             let confirmDelete = confirm('Are you sure you want to permanently delete your account?');
             if (!confirmDelete) return;
 
             try {
-                await axios.delete(`https://ymdeebee.herokuapp.com/users/${currentUsername}`, {
+                await axios.delete(`https://ymdeebee.herokuapp.com/users/${user.Username}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 alert('Your account was permanently deleted.');
@@ -178,7 +178,7 @@ export function ProfileView() {
                                         />
                                         {birthdayErr && <p>{birthdayErr}</p>}
                                     </Form.Group>
-                                    <Button className='mt-2' variant="info" onClick={() => { handleUpdate() }} >Update Info</Button>
+                                    <Button className='mt-2' variant="outline-light" onClick={() => { handleUpdate() }} >Update Info</Button>
                                 </Form>
                             </Card.Body>
                         </Card>
