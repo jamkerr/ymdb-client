@@ -41,7 +41,7 @@ export function MenuBar() {
                             <Button variant='outline-light' onClick={onLoggedOut}>Sign out</Button>
                         )}
                         {!isLoggedIn() && (
-                            <Nav.Link href='/register'>Create account</Nav.Link>
+                            <Button variant='outline-light' href='/register'>Create account</Button>
                         )}
                         {!isLoggedIn() && (
                             <Nav.Link href='/'>Sign in</Nav.Link>

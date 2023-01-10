@@ -77,8 +77,8 @@ export function RegistrationView() {
     return (
         <Container className='login-container d-flex justify-content-center align-items-center'>
             <Row className='margin-auto'>
-                <Col md={8}>
-                    <Card bg='secondary' className='login-card'>
+                <Col md={10}>
+                    <Card bg='dark' className='login-card'>
                         <Card.Body>
                             <Card.Title>Create Account</Card.Title>
                             <Form>
@@ -124,7 +124,7 @@ export function RegistrationView() {
                                     />
                                     {birthdayErr && <p>{birthdayErr}</p>}
                                 </Form.Group>
-                                <Button className='mt-2' variant="info" type="submit" onClick={handleSubmit}>Create account</Button>
+                                <Button className='mt-2' variant="outline-light" type="submit" onClick={handleSubmit}>Create account</Button>
                             </Form>
                         </Card.Body>
                     </Card>
