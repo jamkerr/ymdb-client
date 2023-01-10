@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 
@@ -12,14 +12,15 @@ export function MovieCard(props) {
     const { movieData } = props;
 
     return (
-        <Card bg='secondary' className='movie-card h-100'>
-            <Card.Img src={movieData.ImageURL} />
-            <FavoriteButton movie={movieData} />
+        <Card bg='dark' className='movie-card'>
             <Card.Body className='d-flex flex-column'>
-                <Card.Title>{movieData.Title}</Card.Title>
-                <Link to={`/movies/${movieData._id}`}>
-                    <Button className='mt-auto' variant='info'>Open</Button>
+                <Link to={`/movies/${movieData._id}`} className='movie-details-link'>
+                    <Card.Img src={movieData.ImageURL} />
+                    <Card.Title className='card-title'>
+                        {movieData.Title}
+                    </Card.Title>
                 </Link>
+                <FavoriteButton movie={movieData} />
             </Card.Body>
         </Card>
     );    

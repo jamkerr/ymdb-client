@@ -10,7 +10,7 @@ export function FavoriteMovies(props) {
         <>
             <h2>Favorite Movies</h2>
             {favoriteMoviesList.map(m => (
-                <Col key={m._id} md={3}>
+                <Col className='d-flex mb-4' key={m._id} md={3}>
                     <MovieCard movieData={m} />
                 </Col>
             ))}

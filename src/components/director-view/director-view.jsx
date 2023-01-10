@@ -14,7 +14,7 @@ export function DirectorView() {
     const navigate = useNavigate();
 
     return (
-        <Card className='director-view' bg='secondary'>
+        <Card className='director-view' bg='dark'>
             <Card.Body className='d-flex flex-column'>
                 <Card.Title className='director-name'>{movieData.Director.map(d => d.Name)}</Card.Title>
                 <Card.Text className='director-bio'>{movieData.Director.map(d => d.Bio)}</Card.Text>

@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector} from "react-redux";
 import { MovieCard } from "../movie-card/movie-card";
 import { MoviesFilter } from "../movies-filter/movies-filter";
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 export function MoviesList() {
     const movies = useSelector((state) => state.movies.list);
@@ -13,20 +13,24 @@ export function MoviesList() {
 
     return (
         <>
-            <Row>
-                <MoviesFilter />
+            <Row className='my-2'>
+                <Col md={5}>
+                    <MoviesFilter />
+                </Col>
             </Row>
-            <Row>
-                {movies.length === 0 ? (
-                    <Row className='main-view'><h2 className='mt-5'>Loading movies...</h2></Row>
-                ) : (
-                    filteredMovies.map((movie) => (
-                        <Col key={movie._id} md={4}>
-                            <MovieCard movieData={movie} />     
-                        </Col>
-                    ))
-                )}
-            </Row>
+            <Container>
+                <Row>
+                    {movies.length === 0 ? (
+                        <Row className='main-view'><h2 className='mt-5'>Loading movies...</h2></Row>
+                    ) : (
+                        filteredMovies.map((movie) => (
+                            <Col className='d-flex mb-4' key={movie._id} md={4} xl={3}>
+                                <MovieCard movieData={movie} />     
+                            </Col>
+                        ))
+                    )}
+                </Row>
+            </Container>
         </>
     );
 };

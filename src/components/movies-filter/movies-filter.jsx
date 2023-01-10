@@ -9,6 +9,7 @@ export function MoviesFilter() {
     
     return (
         <Form.Control
+            size="sm"
             type="text"
             placeholder="Search..."
             value={filter}

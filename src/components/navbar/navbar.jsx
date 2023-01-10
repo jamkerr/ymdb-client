@@ -26,19 +26,19 @@ export function MenuBar() {
     return (
         <Navbar variant='dark' bg='dark' sticky='top'>
             <Container>
-                <Link to='/'>
+                <Link to='/' className='logo-button'>
                     <Navbar.Brand className='navbar-logo'>YMDB</Navbar.Brand>
                 </Link>
                 <Navbar.Toggle aria-controls='basic-navbar-nav' />
                 <Navbar.Collapse>
-                    <Nav className='ms-auto'>
+                    <Nav className='ms-auto gap-2'>
                         {isLoggedIn() && (
-                            <Link to={`/users/${user.Username}`}>
-                                <Nav.Link as={Button}>{user.Username}</Nav.Link>
+                            <Link to={`/users/${user.Username}`} className='profile-button'>
+                                <Nav.Link as={Button} variant='dark'>{user.Username}</Nav.Link>
                             </Link>
                         )}
                         {isLoggedIn() && (
-                            <Button variant='link' onClick={onLoggedOut}>Sign out</Button>
+                            <Button variant='outline-light' onClick={onLoggedOut}>Sign out</Button>
                         )}
                         {!isLoggedIn() && (
                             <Nav.Link href='/register'>Create account</Nav.Link>

@@ -103,12 +103,12 @@ export function ProfileView() {
             {(!user) ?
                 <h2>Loading Your Profile</h2>
                 :
-                <Row xs={1} >
+                <Row xs={1}>
                     <Row>
                         <h2>Your Profile</h2>
                     </Row>
-                    <Col>
-                        <Card bg='secondary' className='profile-card'>
+                    <Col className='mb-4'>
+                        <Card bg='dark' className='profile-card'>
                             <Card.Body>
                                 <Card.Title>Name: {currentUsername}</Card.Title>
                                 <Card.Text>Email: {user.Email}</Card.Text>
@@ -116,11 +116,13 @@ export function ProfileView() {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <FavoriteMovies favoriteMoviesList={movies.filter((m) => user.FavoriteMovies.includes(m._id))} />
+                    <Row>
+                        <FavoriteMovies favoriteMoviesList={movies.filter((m) => user.FavoriteMovies.includes(m._id))} />
+                    </Row>
                     <Row>
                         <h2>Update Info</h2>
                     </Row>
-                    <Col>
+                    <Col className='mb-4'>
                         <Card bg="dark">
                             <Card.Body>
                                 <Form>
@@ -165,10 +167,10 @@ export function ProfileView() {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Row>
+                    <Row className='mt-2'>
                         <h2>Delete Account</h2>
                     </Row>
-                    <Col>
+                    <Col className='mb-4'>
                         <Card bg="dark">
                             <Card.Body>
                                 <Button variant="danger" onClick={() => { handleDelete() }} >Delete Account</Button>
