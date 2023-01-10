@@ -16,12 +16,14 @@ export function MovieCard(props) {
             <Card.Body className='d-flex flex-column'>
                 <Link to={`/movies/${movieData._id}`} className='movie-details-link'>
                     <Card.Img src={movieData.ImageURL} />
-                    <Card.Title className='card-title'>
+                    <Card.Title className='mt-3 mb-0'>
                         {movieData.Title}
                     </Card.Title>
                 </Link>
-                <FavoriteButton movie={movieData} />
             </Card.Body>
+            <div className='mt-auto m-3'>
+                <FavoriteButton movie={movieData} />
+            </div>
         </Card>
     );    
 }
