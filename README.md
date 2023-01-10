@@ -15,7 +15,6 @@ parcel src/index.html
 This project uses the following technologies:
 
 -   <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg" title="React" alt="React" width="40" height="40"/> React 18
-- Redux toolkit 1.9
-- React-Bootstrap 2.6
-- Parcel
-- MongoDB
+- <img src="https://github.com/devicons/devicon/blob/master/icons/redux/redux-original.svg" title="React" alt="React" width="40" height="40"/> Redux toolkit 1.9
+- <img src="https://github.com/devicons/devicon/blob/master/icons/bootstrap/bootstrap-original-wordmark.svg" title="React" alt="React" width="40" height="40"/> React-Bootstrap 2.6
+- <img src="https://github.com/devicons/devicon/blob/master/icons/mongodb/mongodb-original-wordmark.svg" title="React" alt="React" width="40" height="40"/> MongoDB (via https://github.com/jamkerr/movie_api)
