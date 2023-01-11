@@ -50,7 +50,7 @@ export function ProfileView() {
         if (!email) {
             setEmailErr('Chuck an Email Address in here');
             isReq = false;
-        } else if (email.indexOf('@') === -1) {
+        } else if (!email.match( /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i )) {
             setEmailErr('You sure that email is correct?');
             isReq = false;
         }
