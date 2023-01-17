@@ -61,7 +61,7 @@ export function MainView () {
         <BrowserRouter>
             <MenuBar />
             <Container className='mt-5'>
-                <Row className='main-view g-5 mx-1'>
+                <Row className='main-view mx-1'>
                     <Routes>
                         {/* If no user in state, show login page. Otherwise, show the main movies list. */}
                         <Route path='/' element={
@@ -80,9 +80,7 @@ export function MainView () {
                                 {user ? (
                                     <Navigate to='/' />
                                 ) : (
-                                    <Col>
-                                        <RegistrationView />
-                                    </Col>
+                                    <RegistrationView />
                                 )}
                             </>
                         } />

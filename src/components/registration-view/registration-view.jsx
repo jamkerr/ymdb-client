@@ -75,10 +75,10 @@ export function RegistrationView() {
     };
 
     return (
-        <Container className='login-container d-flex justify-content-center align-items-center'>
+        <Container className='registration-container d-flex justify-content-center align-items-center'>
             <Row className='margin-auto'>
-                <Col md={10}>
-                    <Card bg='dark' className='login-card'>
+                <Col>
+                    <Card bg='dark' className='registration-card p-4'>
                         <Card.Body>
                             <Card.Title>Create Account</Card.Title>
                             <Form>

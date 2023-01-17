@@ -57,24 +57,35 @@ export function LoginView(props) {
     return (
         <Container className='login-container d-flex justify-content-center align-items-center'>
             <Row className='margin-auto'>
-                <Col md={10}>
-                    <Card bg='dark' className='login-card'>
+                <Col>
+                    <Card bg='dark' className='login-card p-4'>
                         <Card.Body>
-                        <Card.Title>Sign In</Card.Title>
-                        <Form>
-                            <Form.Group controlId="formUsername">
-                                <Form.Label>Username:</Form.Label>
-                                <Form.Control type="text"  placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
-                                {usernameErr && <p>{usernameErr}</p>}
-                            </Form.Group>
-                            <Form.Group controlId="formPassword">
-                                <Form.Label>Password:</Form.Label>
-                                <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-                                {passwordErr && <p>{passwordErr}</p>}
-                            </Form.Group>
-                            <Button className='mt-2' variant="light" type="submit" onClick={handleSubmit}>Sign in</Button>
-                        </Form>
-                        <p className='mt-4'>Don't have an account yet? <Button variant="outline-light" href="./register">Create an account</Button></p>
+                            <Card.Title>Sign In</Card.Title>
+                            <Form>
+                                <Form.Group controlId="formUsername">
+                                    <Form.Label>Username:</Form.Label>
+                                    <Form.Control
+                                        type="text" 
+                                        placeholder="Enter username"
+                                        value={username}
+                                        onChange={e => setUsername(e.target.value)}
+                                    />
+                                    {usernameErr && <p>{usernameErr}</p>}
+                                </Form.Group>
+                                <Form.Group controlId="formPassword">
+                                    <Form.Label>Password:</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Password"
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
+                                    />
+                                    {passwordErr && <p>{passwordErr}</p>}
+                                </Form.Group>
+                                <Button className='mt-2' variant="light" type="submit" onClick={handleSubmit}>Sign in</Button>
+                            </Form>
+                            <p className='mt-4 mb-0'>Don't have an account yet?</p>
+                            <Button variant="outline-light" href="./register">Create an account</Button>
                         </Card.Body>
                     </Card>
                 </Col>
