@@ -22,8 +22,8 @@ export function ProfileView() {
 
     const [ currentUsername, setCurrentUsername ] =  useState(user ? user.Username : null);;
     const [ password, setPassword ] = useState('');
-    const [ email, setEmail ] = useState('');
-    const [ birthday, setBirthday ] = useState('');
+    const [ email, setEmail ] = useState(user ? user.Email : null);
+    const [ birthday, setBirthday ] = useState(user ? user.Birth_Date : null);
 
     const [ currentUsernameErr, setCurrentUsernameErr ] = useState('');
     const [ passwordErr, setPasswordErr ] = useState('');
@@ -173,7 +173,7 @@ export function ProfileView() {
                                         <Form.Label>Birthday:</Form.Label>
                                         <Form.Control
                                             type="date"
-                                            value={birthday}
+                                            value={moment(birthday).format('YYYY-MM-DD')}
                                             onChange={e => setBirthday(e.target.value)}
                                         />
                                         {birthdayErr && <p>{birthdayErr}</p>}
