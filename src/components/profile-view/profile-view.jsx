@@ -82,14 +82,12 @@ export function ProfileView() {
             }
 
             try {
-                await axios.post('https://ymdeebee.herokuapp.com/login', {
+                const authResponse = await axios.post('https://ymdeebee.herokuapp.com/login', {
                     Username: currentUsername,
                     Password: password
                 })
-                .then(response => {
-                    localStorage.setItem('token', response.data.token);
-                    dispatch(setUser(response.data.user));
-                })
+                localStorage.setItem('token', authResponse.data.token);
+                dispatch(setUser(authResponse.data.user));
             } catch (error) {
                 console.log(error);
             }
