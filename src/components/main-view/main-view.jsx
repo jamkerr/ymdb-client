@@ -60,7 +60,7 @@ export function MainView () {
     return (
         <BrowserRouter>
             <MenuBar />
-            <Container className='mt-5'>
+            <Container>
                 <Row className='main-view mx-1'>
                     <Routes>
                         {/* If no user in state, show login page. Otherwise, show the main movies list. */}
