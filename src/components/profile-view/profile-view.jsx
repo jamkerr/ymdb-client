@@ -69,7 +69,7 @@ export function ProfileView() {
                 await axios.put(`https://ymdeebee.herokuapp.com/users/${user.Username}`,
                 {
                     Username: currentUsername ? currentUsername : user.Username,
-                    Password: password ? password : user.Password,
+                    Password: password,
                     Email: email ? email : user.Email,
                     Birth_Date: birthday ? birthday : user.Birth_Date
                 },

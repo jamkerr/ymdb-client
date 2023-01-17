@@ -5,7 +5,8 @@ const userSlice = createSlice({
     initialState: null,
     reducers: {
         setUser: (state, action) => {
-            return action.payload
+            const {Password, ...stateUser} = action.payload;
+            return stateUser;
         },
         favoriteAdded: (state, action) => {
             state.FavoriteMovies.push(action.payload);
