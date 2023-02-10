@@ -1,83 +1,76 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 
-import {BrowserRouter, Routes, Route, Navigate, Redirect} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 
 import { Row, Col, Container } from 'react-bootstrap';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { MovieCard } from '../movie-card/movie-card';
+import { MoviesList } from '../movies-list/movies-list';
 import { MovieView } from '../movie-view/movie-view';
 import { MenuBar } from '../navbar/navbar';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
 
+import { useSelector, useDispatch } from "react-redux";
+import { setMovies } from "../../redux/reducers/movies";
+import { setUser } from "../../redux/reducers/user";
 
 import './main-view.scss';
 
 export function MainView () {
 
-    // const storedUser = JSON.parse(localStorage.getItem('user'));
-    const storedUser = localStorage.getItem('user');
-    const storedToken = localStorage.getItem('token');
+    // Use redux toolkit to get state of movies and user
+    const movies = useSelector((state) => state.movies.list);
+    const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
 
-    const [ movies, setMovies ] = useState([]);
-    const [ user, setUser ] =  useState(storedUser ? storedUser : null);
-    const [ token, setToken ] = useState(storedToken ? storedToken : null);
-    const [ favoriteMovies, setFavoriteMovies ] = useState([]);
+    // Token is stored in local storage
+    const token = localStorage.getItem('token');
 
+    // Use axios to make API call to get movies array. Requires token.
     const getMovies = (token) => {
         axios.get('https://ymdeebee.herokuapp.com/movies', {
             headers: {Authorization: `Bearer ${token}`}
         })
         .then(response => {
-            // Assign the result to state
-            setMovies(response.data);
+            // Assign the movies array to state
+            dispatch(setMovies(response.data));
         })
         .catch(error => {
             console.log(error);
         });
     }
 
+    // When logged in, save token to local storage, and set user to state
     const onLoggedIn = (authData) => {
-        setUser( authData.user.Username );
-        setFavoriteMovies( authData.user.FavoriteMovies );
-
         localStorage.setItem('token', authData.token);
-        localStorage.setItem('user', authData.user.Username);
-
-        setToken(localStorage.getItem('token'));
+        dispatch(setUser(authData.user));
     }
 
+    // When token changes and exists, use it to get movies
     useEffect(() => {
         if (token !== null) {
-            setUser( localStorage.getItem('user') );
             getMovies(token);
         }
     }, [token]);
 
     return (
         <BrowserRouter>
-            <MenuBar user={user}></MenuBar>
-            <Container className='mt-5'>
-                <Row className='main-view g-5'>
+            <MenuBar />
+            <Container>
+                <Row className='main-view mx-1'>
                     <Routes>
-                        {/* Card list: Show MovieCards for each movie, make movieData prop available */}
+                        {/* If no user in state, show login page. Otherwise, show the main movies list. */}
                         <Route path='/' element={
                             <>
                             {!user ? (
-                                        <LoginView onLoggedIn={user => onLoggedIn(user)} />
-                                    ) : movies.length === 0 ? (
-                                        <Row className='main-view'><h2 className='mt-5'>Loading movies...</h2></Row>
-                                    ) : (
-                                        movies.map(m => (
-                                            <Col key={m._id} md={4}>
-                                                <MovieCard movieData={m} favoriteMovies={favoriteMovies} />
-                                            </Col>
-                                        ))
-                                    )                               
+                                    <LoginView onLoggedIn={authResponse => onLoggedIn(authResponse)} />
+                                ) : (
+                                    <MoviesList />
+                                )
                             }
                             </>
                         } />
@@ -85,29 +78,24 @@ export function MainView () {
                         <Route path='/register' element={
                             <>
                                 {user ? (
-                                    <Redirect to='/' />
+                                    <Navigate to='/' />
                                 ) : (
-                                    <Col>
-                                        <RegistrationView />
-                                    </Col>
+                                    <RegistrationView />
                                 )}
                             </>
                         } />
-                        {/* Movie view: show MovieView for that movie, make that movieData prop available */}
+                        {/* Movie view: show MovieView for a single movie. */}
                         <Route path='/movies/:movieId' element={
                             <>
                                 { movies.length === 0 ? (
                                     <Row className='main-view'></Row>
                                 ) : (
                                 <Col>
-                                    <MovieView
-                                        movies={movies}
-                                    />
+                                    <MovieView />
                                 </Col>
                                 )}
                             </>
                         } />
-
                         {/* Director view */}
                         <Route path='/directors/:directorId' element={
                             <>
@@ -115,9 +103,7 @@ export function MainView () {
                                     <Row className='main-view'><h2 className='mt-5'>Loading director info...</h2></Row>
                                 ) : (
                                 <Col>
-                                    <DirectorView
-                                        movies={movies}
-                                    />
+                                    <DirectorView />
                                 </Col>
                                 )}
                             </>
@@ -129,9 +115,7 @@ export function MainView () {
                                     <Row className='main-view'><h2 className='mt-5'>Loading genre info...</h2></Row>
                                 ) : (
                                 <Col>
-                                    <GenreView
-                                        movies={movies}
-                                    />
+                                    <GenreView />
                                 </Col>
                                 )}
                             </>
@@ -139,9 +123,7 @@ export function MainView () {
                         {/* Profile view */}
                         <Route path='/users/:username' element={
                             <Col>
-                                <ProfileView
-                                    movies={movies}
-                                />
+                                <ProfileView />
                             </Col>
                         } />
                     </Routes>

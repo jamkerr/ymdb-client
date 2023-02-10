@@ -43,7 +43,7 @@ export function RegistrationView() {
         if (!email) {
             setEmailErr('Chuck an Email Address in here');
             isReq = false;
-        } else if (email.indexOf('@') === -1) {
+        } else if (!email.match( /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i )) {
             setEmailErr('You sure that email is correct?');
             isReq = false;
         }
@@ -75,10 +75,10 @@ export function RegistrationView() {
     };
 
     return (
-        <Container className='login-container d-flex justify-content-center align-items-center'>
+        <Container className='registration-container d-flex justify-content-center align-items-center'>
             <Row className='margin-auto'>
-                <Col md={8}>
-                    <Card bg='secondary' className='login-card'>
+                <Col>
+                    <Card bg='dark' className='registration-card p-4'>
                         <Card.Body>
                             <Card.Title>Create Account</Card.Title>
                             <Form>
@@ -124,7 +124,7 @@ export function RegistrationView() {
                                     />
                                     {birthdayErr && <p>{birthdayErr}</p>}
                                 </Form.Group>
-                                <Button className='mt-2' variant="info" type="submit" onClick={handleSubmit}>Create account</Button>
+                                <Button className='mt-2' variant="outline-light" type="submit" onClick={handleSubmit}>Create account</Button>
                             </Form>
                         </Card.Body>
                     </Card>

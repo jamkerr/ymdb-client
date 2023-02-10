@@ -1,36 +1,39 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Card, Button, Link } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Card, Button, Link, Badge } from 'react-bootstrap';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+
+import { useSelector } from "react-redux";
+
+import { FavoriteButton } from '../favorite-button/favorite-button';
 
 import './movie-view.scss';
-export function MovieView(props) {
-    const { movies } = props;
-    let { movieId } = useParams();
-    let movieData = movies.find(m => m._id === movieId);
-
+export function MovieView() {
     const navigate = useNavigate();
 
+    const movies = useSelector((state) => state.movies.list);
+    let { movieId } = useParams();
+    // Find movie data that matches particular movie
+    let movieData = movies.find(m => m._id === movieId);
+
     return (
-        <Card className='movie-view' bg='secondary'>
-            <Card.Body className='d-flex flex-column'>
+        <Card className='movie-view' bg='dark'>
+            <Card.Body className='d-flex flex-column align-items-center'>
                 <Card.Title className='movie-title'>{movieData.Title}</Card.Title>
-                <Card.Text className='movie-description'>{movieData.Description}</Card.Text>
-                <Button variant="link" href={`/directors/${movieData.Director.map(d => d._id)}`}>{movieData.Director.map(d => d.Name)}</Button>
-                <Button variant="link" href={`/genres/${movieData.Genre.map(g => g._id)}`}>{movieData.Genre.map(g => g.Name)}</Button>
+                <div className='d-flex gap-2 mb-2'>
+                    <Link to={`/directors/${movieData.Director.map(d => d._id)}`}>
+                        <Badge pill bg="light" text="dark">{movieData.Director.map(d => d.Name)}</Badge>
+                    </Link>
+                    <Link to={`/genres/${movieData.Genre.map(g => g._id)}`}>
+                        <Badge pill bg="light" text="dark">{movieData.Genre.map(g => g.Name)}</Badge>
+                    </Link>
+                </div>
+                <Card.Text className='movie-description px-5'>{movieData.Description}</Card.Text>
                 <Card.Img className='movie-image mx-auto' src={movieData.ImageURL}/>
-                <Button variant='info' className='mt-2' onClick={() => navigate(-1)}>Back</Button>
+                <div className='d-flex gap-2 m-2 align-items-center'>
+                    <Button variant='outline-light' className='mt-2' onClick={() => navigate(-1)}>Back</Button>
+                    <FavoriteButton movie={movieData} />
+                </div>
             </Card.Body>
         </Card>
     );
 }
-
-MovieView.propTypes = {
-    movies: PropTypes.shape({
-        Title: PropTypes.string.isRequired,
-        Description: PropTypes.string.isRequired,
-        ImageURL: PropTypes.string.isRequired,
-        Director: PropTypes.array.isRequired,
-        Genre: PropTypes.array.isRequired
-    }).isRequired
-};

@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Container from 'react-bootstrap/Container';
 import { MainView } from './components/main-view/main-view';
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
 
 // Import statement to indicate that you need to bundle `./index.scss`
 import './index.scss';
@@ -9,9 +11,11 @@ import './index.scss';
 // Main component (will eventually use all the others)
 function YMDBApplication() {
   return (
-    <Container fluid className='everything-container p-0'>
-      <MainView />
-    </Container>
+    <Provider store={store}>
+      <Container fluid className='everything-container p-0'>
+        <MainView />
+      </Container>
+    </Provider>
   );
 }
 

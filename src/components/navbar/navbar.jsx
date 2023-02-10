@@ -1,9 +1,14 @@
 import React from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+import { useSelector } from "react-redux";
 
 import './navbar.scss';
 
-export function MenuBar({user}) {
+export function MenuBar() {
+
+    const user = useSelector((state) => state.user);
 
     const onLoggedOut = () => {
         localStorage.clear();
@@ -11,8 +16,8 @@ export function MenuBar({user}) {
     }
 
     const isLoggedIn = () => {
-        if (localStorage.getItem('token')) {
-            return localStorage.getItem('token');
+        if ( user ) {
+            return true;
         } else {
             return false;
         }
@@ -21,18 +26,22 @@ export function MenuBar({user}) {
     return (
         <Navbar variant='dark' bg='dark' sticky='top'>
             <Container>
-                <Navbar.Brand className='navbar-logo' href='/'>YMDB</Navbar.Brand>
+                <Link to='/' className='logo-button'>
+                    <Navbar.Brand className='navbar-logo'>YMDB</Navbar.Brand>
+                </Link>
                 <Navbar.Toggle aria-controls='basic-navbar-nav' />
                 <Navbar.Collapse>
-                    <Nav className='ms-auto'>
+                    <Nav className='ms-auto gap-2'>
                         {isLoggedIn() && (
-                            <Nav.Link href={`/users/${user}`}>{user}</Nav.Link>
+                            <Link to={`/users/${user.Username}`} className='profile-button'>
+                                <Nav.Link as={Button} variant='dark'>{user.Username}</Nav.Link>
+                            </Link>
                         )}
                         {isLoggedIn() && (
-                            <Button variant='link' onClick={onLoggedOut}>Sign out</Button>
+                            <Button variant='outline-light' onClick={onLoggedOut}>Sign out</Button>
                         )}
                         {!isLoggedIn() && (
-                            <Nav.Link href='/register'>Create account</Nav.Link>
+                            <Button variant='outline-light' href='/register'>Create account</Button>
                         )}
                         {!isLoggedIn() && (
                             <Nav.Link href='/'>Sign in</Nav.Link>
