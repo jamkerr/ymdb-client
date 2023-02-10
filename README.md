@@ -7,6 +7,10 @@ It's a bit like IMDB that requires a user account. And with a few fewer movies a
 ## Screenshot
 
 ![A screenshot of the main movie view when a user is signed in](./screenshots/screenshot-main-movie-view.png)
+
+## Live app
+
+Try the app out for yourself on the [live instance hosted on Netlify](https://ymdb.netlify.app)!
 ## Build with Parcel
 
 If you're running the app locally, you can build it with Parcel:
